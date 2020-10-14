@@ -6,15 +6,21 @@ from db import get_user
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+app.secret_key = "my secert key"
 login_manager = LoginManager()
+login_manager.login_view = 'login'
 login_manager.init_app(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html' )
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if current_user.is_authenticated:
+        return redirect(url_for('menu'))
+
     message = ''
     if request.method == 'POST':
         username = request.form.get('username')
@@ -23,16 +29,24 @@ def login():
 
         if user and user.check_password(password_input):
             login_user(user)
-            return redirect(url_for('home'))
+            return redirect(url_for('menu'))
         else:
             message = 'failed to login'
     return render_template('login.html', message=message)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 @app.route('/menu')
 def menu():
     return render_template('menu.html')
 
 @app.route('/chat')
+@login_required
 def chat():
     username = request.args.get('username')
     room = request.args.get('room')
