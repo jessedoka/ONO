@@ -25,7 +25,10 @@ def get_user(username):
     user_data = users_collection.find_one({
         '_id': username
     })
-    return User(user_data['_id'], user_data['email'], user_data['password']) if user_data else None
+    if user_data:
+        return User(user_data['_id'], user_data['email'], user_data['password'])
+    else:
+        None
     
 if __name__ == "__main__": 
     save_user("derik", "derick123@gmail.com", "froggit42")
