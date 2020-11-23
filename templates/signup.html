@@ -5,19 +5,49 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <title>Document</title>
+        <style>
+            body {
+                color: #ffffff;
+                margin-left: 30px;
+            }
+        
+            #motto {
+                font-size: 54px;
+            }
+        
+            #container img {
+                width: 120px;
+                height: 120px;
+            }
+        
+            input[type=text],
+            input[type=password],
+            input[type=email] {
+                font-family: 'Jetbrains Mono';
+                padding-left: 30px;
+                color: #585858;
+                width: 500px;
+                height: 70px;
+                font-size: 54px;
+                background-color: #707070;
+            }
+        </style>
     </head>
     <body>
+        <div id='container'>
+            <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
+            <h2 id="motto">ENTER IF YOU DARE</h2>
+            <h3>{{ message }}</h3>
+        </div>
+
         <h1>SignUp</h1>
         <h3>{{ message }}</h3>
         <form method="post" action="/signup">
-            <label>Username:</label>
-            <input type="text" name="username" >
+            <input type="text" name="username" placeholder="Username">
             <br>
-            <label>Email</label>
-            <input type="text" name="email">
+            <input type="email" name="email" placeholder="Email">
             <br>
-            <label>Password</label>
-            <input type="text" name="password">
+            <input type="password" name="password" placeholder="Password">
             <br>
             <button type="submit">Submit</button>
         </form>     

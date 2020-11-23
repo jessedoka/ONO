@@ -5,6 +5,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <title>ONO</title>
+            <style>
+                body {
+                color: #ffffff;
+                margin-left: 30px;
+                }
+            
+                #motto {
+                font-size: 54px;
+                }
+                
+                #container img {
+                width: 120px;
+                height: 120px;
+                }
+                
+                input[type=text],
+                input[type=password],
+                input[type=email] {
+                font-family: 'Jetbrains Mono';
+                padding-left: 30px;
+                color: #585858;
+                width: 500px;
+                height: 70px;
+                font-size: 54px;
+                background-color: #707070;
+                }
+
+            </style>
     </head>
     <body>
         <h1>Hi 
@@ -17,14 +45,15 @@
         <h3>HI, What's your Name</h3>
         <form action="/chat">
             <div>
-                <label for="">Enter your username</label>
-                <input type="text" name="username" id="">
+                <input type="text" name="username" id="" placeholder="username">
             </div>
             <div>
-                <label for="">Enter your room id</label>
-                <input type="text" name="room" id="">
+                <input type="text" name="room" id="" placeholder="room id">
             </div>
             <button type="submit">Submit</button>
+        </form>
+        <form action="/logout">
+            <button type="submit">Logout</button>
         </form>
     </body>
 </html>

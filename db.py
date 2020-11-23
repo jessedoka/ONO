@@ -1,17 +1,19 @@
 import ssl
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash
+from datetime import datetime
 
 from user import User
 
-client = MongoClient(
-    "mongodb+srv://Jesse:SbjZHADI2ze5Ed6y@ono.s8dnu.mongodb.net/ChatDB?retryWrites=true&w=majority", 
+client = MongoClient( 
+    'mongodb+srv://Jesse:SbjZHADI2ze5Ed6y@ono.s8dnu.mongodb.net/ChatDB?retryWrites=true&w=majority',
     ssl = True,
     ssl_cert_reqs=ssl.CERT_NONE
     )
 
 chat_db = client.get_database('ChatDB')
 users_collection = chat_db.get_collection("users")
+message_collection = chat_db.get_collection("messages")
 
 def save_user(username, email, password): 
     password_hash = generate_password_hash(password)
@@ -19,6 +21,14 @@ def save_user(username, email, password):
         '_id': username,
         'email': email,
         'password': password_hash
+    })
+
+def save_message(username, room, message, time=datetime.now()):
+    message_collection.insert_one({
+        'id': username,
+        'message': message,
+        'room': room,
+        'time': time
     })
 
 def get_user(username):

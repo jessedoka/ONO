@@ -4,21 +4,51 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
         <title>Login</title>
+        <style>
+            body{
+                color: #ffffff;
+                margin-left: 30px;
+            }
+
+            #motto{
+                font-size: 54px;
+            }
+
+            #container img{
+                width: 120px;
+                height: 120px;
+            }
+
+            input[type=text], input[type=password]{
+                font-family: 'Jetbrains Mono';
+                padding-left: 30px;
+                color: #585858;
+                width: 500px;
+                height: 70px;
+                font-size: 54px;
+                background-color: #707070;   
+            }
+
+        </style>
     </head>
     <body>
-        <h1>Login</h1>
-        <h3>{{ message }}</h3>
+        <div id='container'>
+            <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
+            <h2 id="motto">ENTER IF YOU DARE</h2>
+            <h3>{{ message }}</h3>
+        </div>
 
         <form method="post" action="\login">
-            <label> Username: </label>
-            <input type="text" name="username">
+            <input type="text" name="username" placeholder="username">
             <br>
-            <label> Password: </label>
-            <input type="password" name="password">
+            <input type="password" name="password" placeholder="password">
             <br>
             <button type="submit">Submit</button>
         </form>
-        
+        <form action=\signup>
+            <button type="submit">Sign Up</button>
+        </form>
     </body>
 </html>
