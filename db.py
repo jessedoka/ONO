@@ -1,7 +1,7 @@
 import ssl
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from user import User
 
@@ -15,6 +15,7 @@ chat_db = client.get_database('ChatDB')
 users_collection = chat_db.get_collection("users")
 message_collection = chat_db.get_collection("messages")
 
+
 def save_user(username, email, password): 
     password_hash = generate_password_hash(password)
     users_collection.insert_one({
@@ -23,7 +24,7 @@ def save_user(username, email, password):
         'password': password_hash
     })
 
-def save_message(username, room, message, time=datetime.now()):
+def save_message(username, room, message, time=datetime.now().strftime('%c')):
     message_collection.insert_one({
         'id': username,
         'message': message,
@@ -39,8 +40,16 @@ def get_user(username):
         return User(user_data['_id'], user_data['email'], user_data['password'])
     else:
         None
+
+def twennyfour(index, time):
+    now = datetime.now()
+    if now-timedelta(hours=24) <= time <= now:
+        message_collection.delete_one(index)
+
     
 if __name__ == "__main__": 
-    save_user("derik", "derick123@gmail.com", "froggit42")
-    
- 
+    x = message_collection.find()
+    messages = [msg for msg in x]
+    for msg in messages:
+        del msg['_id']
+    print(messages)

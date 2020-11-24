@@ -9,7 +9,16 @@
 
     <body>
         <h1>welcome to chat {{ username }}! You're in room: {{ room }}</h1>
-        <div id="messages"></div>
+        <div id="messages">
+            {% for msg in messages %}
+                {% if msg['room'] == room%}
+                    <div>
+                        <b>{{msg['id']}}:&nbsp;</b>
+                        {{ msg['message'] }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
         <form id="message_input_form">
             <input type="text" placeholder="Enter here" id="message_input">
             <button type="submit">Send</button>

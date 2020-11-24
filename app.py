@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user, LoginManager
 from flask_socketio import SocketIO, join_room, leave_room
 from pymongo.errors import DuplicateKeyError
-from db import get_user, save_user, save_message
+from db import get_user, save_user, save_message, twennyfour, message_collection
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -73,8 +74,13 @@ def chat():
     username = request.args.get('username')
     room = request.args.get('room')
 
+    messages = [msg for msg in message_collection.find()]
+    for index in messages:
+        twennyfour(index, index['time'])
+        del index['_id']
+
     if username and room:
-        return render_template('chat.html', room=room, username=username)
+        return render_template('chat.html', room=room, username=username, messages=messages)
     else:
         return redirect('/menu')
 
