@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user, LoginManager
 from flask_socketio import SocketIO, join_room, leave_room
 from pymongo.errors import DuplicateKeyError
-from db import get_user, save_user, save_message, twennyfour, message_collection
+from db import get_user, save_user, save_message, timeformat, message_collection
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -48,7 +48,9 @@ def signup():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
+
         try:
+            
             save_user(username, email, password)
             return redirect(url_for('login'))
         except DuplicateKeyError:
@@ -65,22 +67,23 @@ def logout():
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')
+    username = request.form.get('username')
+    return render_template('menu.html', username=username)
 
 
 @app.route('/chat')
 @login_required
 def chat():
-    username = request.args.get('username')
     room = request.args.get('room')
 
     messages = [msg for msg in message_collection.find()]
     for index in messages:
-        twennyfour(index, index['time'])
+        if timeformat(index['time']) >= 24:
+            message_collection.delete_one(index) 
         del index['_id']
 
-    if username and room:
-        return render_template('chat.html', room=room, username=username, messages=messages)
+    if room:
+        return render_template('chat.html', room=room, messages=messages, time=datetime.now().strftime('%X'))
     else:
         return redirect('/menu')
 

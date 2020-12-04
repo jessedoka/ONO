@@ -19,6 +19,11 @@
                 width: 120px;
                 height: 120px;
             }
+
+            #username, #password, #email{
+                margin-bottom: 25px;
+            }
+
         
             input[type=text],
             input[type=password],
@@ -31,11 +36,30 @@
                 font-size: 54px;
                 background-color: #707070;
             }
+
+            .pulseBtn {
+                padding: 12px 24px;
+                background-color: hsl(0, 0%, 40%);
+                color: hsl(0, 0%, 17%);
+                border-radius: 6px;
+                box-shadow: 0 0 0 0 rgba(230, 237, 255, 0.7);
+                animation: pulse 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
+            }
+
+            @keyframes pulse {
+                to {
+                box-shadow: 0 0 0 5px rgba(230, 237, 255, 0);
+                }
+            }
+
+            
         </style>
     </head>
     <body>
         <div id='container'>
-            <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
+            </a>
             <h2 id="motto">ENTER IF YOU DARE</h2>
             <h3>{{ message }}</h3>
         </div>
@@ -43,13 +67,13 @@
         <h1>SignUp</h1>
         <h3>{{ message }}</h3>
         <form method="post" action="/signup">
-            <input type="text" name="username" placeholder="Username">
+            <input id='username' type="text" name="username" placeholder="Username">
             <br>
-            <input type="email" name="email" placeholder="Email">
+            <input id='email' type="email" name="email" placeholder="Email">
             <br>
-            <input type="password" name="password" placeholder="Password">
+            <input id='password' type="password" name="password" placeholder="Password">
             <br>
-            <button type="submit">Submit</button>
+            <button id='submit' class='pulseBtn' type="submit">Submit</button>
         </form>     
     </body>
 </html>

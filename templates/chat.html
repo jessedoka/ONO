@@ -5,34 +5,71 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <title>ONO</title>
-    </head>
+        <style>
+            
+            #roomid{
+                font-size: 100px;
+                text-align: center;
+            }
 
+            .message-box{
+                color: #000000;
+                text-align: unset;
+            }
+
+            .box{
+                background-color: #D8D8D8;
+                margin: auto;
+                width: 60%;
+                padding: 10px;
+
+            }
+
+            .container{
+                display: flex;
+                width: inherit;
+            }
+
+            input[type=text]{
+                font-family: 'Jetbrains Mono';
+                color: #4b4b4b;
+                margin: auto;
+                width:fit-content;
+            }
+            
+        </style>
+    </head>
     <body>
-        <h1>welcome to chat {{ username }}! You're in room: {{ room }}</h1>
-        <div id="messages">
-            {% for msg in messages %}
-                {% if msg['room'] == room%}
-                    <div>
-                        <b>{{msg['id']}}:&nbsp;</b>
-                        {{ msg['message'] }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+        <h1 id="roomid"> ROOM {{ room }}</h1>
+        <div class='box'>
+            <div class='message-box' id="messages">
+                {% for msg in messages %}
+                    {% if msg['room'] == room %}
+                        <div>
+                            <b>{{msg['id']}}</b>
+                            <b>{{ msg['time'].strftime('%X')}}</b>
+                            {{ msg['message'] }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class='container' >
+                <form id="message_input_form">
+                    <input type="text" placeholder="WHAT ARE YOU THINKING " id="message_input">
+                    <button id='btn' type="submit">Send</button>
+                </form>
+                <form id="leave_form">
+                    <button id='btn' type="submit">leave</button>
+                </form>
+            </div>
         </div>
-        <form id="message_input_form">
-            <input type="text" placeholder="Enter here" id="message_input">
-            <button type="submit">Send</button>
-        </form>
-        <form id="leave_form">
-            <button type="submit">leave</button>
-        </form>
     </body>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         const socket = io.connect("http://127.0.0.1:5000");
-        socket.on('connect', function () {
+        socket.on('connect', function() {
             socket.emit('join_room', {
-                username: "{{ username }}",
+                username: "{{ current_user.username }}",
                 room: "{{ room }}"
             });
 
@@ -42,8 +79,9 @@
                 let message = message_input.value.trim();
                 if (message.length) {
                     socket.emit('send_message', {
-                        username: "{{ username }}",
+                        username: "{{ current_user.username }}",
                         room: "{{ room }}",
+                        time: "{{ time }}",
                         message: message
                     })
                 }
@@ -51,31 +89,31 @@
                 message_input.focus();
             }
 
-            document.getElementById('leave_form').onsubmit = function (e) {
+            document.getElementById('leave_form').onsubmit = function(e) {
                 e.preventDefault();
                 location.href = '{{ url_for("menu") }}'
                 socket.emit('leave_room', {
-                    username: "{{ username }}",
+                    username: "{{ current_user.username }}",
                     room: "{{ room }}"
                 });
             }
         });
 
-        socket.on('receive_message', function (data) {
+        socket.on('receive_message', function(data) {
             console.log(data);
             const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.username}:&nbsp;</b> ${data.message}`;
+            newNode.innerHTML = `<b>${data.username} ${data.time}</b> <b>${data.message}</b>`;
             document.getElementById('messages').appendChild(newNode);
         });
 
-        socket.on('join_room_annoucement', function (data) {
+        socket.on('join_room_annoucement', function(data) {
             console.log(data);
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
             document.getElementById('messages').appendChild(newNode);
         });
 
-        socket.on('leave_room_annoucement', function (data) {
+        socket.on('leave_room_annoucement', function(data) {
             console.log(data);
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}</b> has left the room`;
@@ -83,3 +121,4 @@
         });
     </script>
 </html>
+

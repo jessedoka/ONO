@@ -24,7 +24,7 @@ def save_user(username, email, password):
         'password': password_hash
     })
 
-def save_message(username, room, message, time=datetime.now().strftime('%c')):
+def save_message(username, room, message, time=datetime.now()):
     message_collection.insert_one({
         'id': username,
         'message': message,
@@ -41,15 +41,16 @@ def get_user(username):
     else:
         None
 
-def twennyfour(index, time):
+def timeformat(time):
     now = datetime.now()
-    if now-timedelta(hours=24) <= time <= now:
-        message_collection.delete_one(index)
+    time_delta = (now - time)
+    sec_diff = time_delta.total_seconds()
+    return sec_diff/60**2
 
     
 if __name__ == "__main__": 
     x = message_collection.find()
     messages = [msg for msg in x]
     for msg in messages:
+        print(timeformat(msg['time'].strftime('%X')))
         del msg['_id']
-    print(messages)
