@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"> 
         <title>Login</title>
+        
         <style>
             body{
                 color: #ffffff;
@@ -58,13 +59,13 @@
                 }
             }
 
-        </style>
+        </style> 
     </head>
     <body>
         <div id='container'>
-            <a href="{{ url_for('home') }}">
+             <a href="{{ url_for('home') }}">
                 <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
-            </a>
+            </a> 
             <h2 id="motto">ENTER IF YOU DARE</h2>
             <h3>{{ message }}</h3>
         </div>
