@@ -3,7 +3,8 @@ from flask_login import current_user, login_user, login_required, logout_user, L
 from flask_socketio import SocketIO, join_room, leave_room
 from pymongo.errors import DuplicateKeyError
 from db import get_user, save_user, save_message, timeformat, message_collection
-from datetime import datetime, timedelta
+from datetime import datetime
+import re 
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -11,7 +12,6 @@ app.secret_key = "O!N@O£"
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
-
 
 @app.route('/')
 def home():
@@ -48,13 +48,16 @@ def signup():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-
-        try:
-            
-            save_user(username, email, password)
-            return redirect(url_for('login'))
-        except DuplicateKeyError:
-            message = 'User already exists!'
+        user_check: bool = re.search('^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$', username)
+        pass_check: bool = re.search('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$', password)
+        if user_check and pass_check:
+            try:
+                save_user(username, email, password)
+                return redirect(url_for('login'))
+            except DuplicateKeyError:
+                message = 'User already exists!'
+        else: 
+            message = 'username or password needs to be secure!'
     return render_template('signup.html', message=message)
 
 
@@ -64,12 +67,10 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-
 @app.route('/menu')
 def menu():
     username = request.form.get('username')
     return render_template('menu.html', username=username)
-
 
 @app.route('/chat')
 @login_required
