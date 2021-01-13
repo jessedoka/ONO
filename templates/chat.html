@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <title>ONO</title>
+        <title>ONO (chat)</title>
         <style>
             
             #roomid{
@@ -37,7 +37,7 @@
                 width:fit-content;
             }
             
-        </style>
+        </style> 
     </head>
     <body>
         <h1 id="roomid"> ROOM {{ room }}</h1>
@@ -55,7 +55,7 @@
             </div>
             <div class='container' >
                 <form id="message_input_form">
-                    <input type="text" placeholder="WHAT ARE YOU THINKING " id="message_input">
+                    <input type="text" placeholder="WHAT ARE YOU THINKING" id="message_input">
                     <button id='btn' type="submit">Send</button>
                 </form>
                 <form id="leave_form">
@@ -66,7 +66,7 @@
     </body>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
-        const socket = io.connect("http://127.0.0.1:5000");
+        const socket = io.connect("http://0.0.0.0:5000");
         socket.on('connect', function() {
             socket.emit('join_room', {
                 username: "{{ current_user.username }}",
@@ -93,7 +93,7 @@
                 e.preventDefault();
                 location.href = '{{ url_for("menu") }}'
                 socket.emit('leave_room', {
-                    username: "{{ current_user.username }}",
+                    username: "{{ username }}",
                     room: "{{ room }}"
                 });
             }

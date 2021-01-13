@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <title>Document</title>
+        <title>ONO (SignUp)</title>
         <style>
             body {
                 color: #ffffff;
@@ -24,7 +24,6 @@
                 margin-bottom: 25px;
             }
 
-        
             input[type=text],
             input[type=password],
             input[type=email] {
@@ -51,17 +50,14 @@
                 box-shadow: 0 0 0 5px rgba(230, 237, 255, 0);
                 }
             }
-
-            
         </style>
     </head>
     <body>
         <div id='container'>
             <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo">
+                <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo"> 
             </a>
             <h2 id="motto">ENTER IF YOU DARE</h2>
-            <h3>{{ message }}</h3>
         </div>
 
         <h1>SignUp</h1>
