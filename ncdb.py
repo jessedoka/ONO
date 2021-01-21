@@ -15,6 +15,3 @@ def save_user(username:  str, email: str, password: str):
         'email': email,
         'password': password_hash
     })
-
-if __name__ == '__main__':
-    pass
