@@ -56,6 +56,5 @@ class Metavault:
                 value = json.dumps(value)
                 f.write(value)
             print(value)
-            return None
         except FileNotFoundError:
             pass
