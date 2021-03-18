@@ -7,7 +7,7 @@ from datetime import datetime
 import re 
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 app.secret_key = "O!N@O£"
 login_manager = LoginManager()
 login_manager.login_view = 'login'
@@ -119,4 +119,4 @@ def load_user(username):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, host='0.0.0.0')
+    socketio.run(app, debug=True, host='127.0.0.1')
