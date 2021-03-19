@@ -7,3 +7,9 @@
   goal: 'not sure yet'
 ```
 This is just the current goal I have in mind not sure, where this is going will update this soon. 
+
+## RUNNING 
+```shell
+bash ono.sh 
+```
+Should start running on your localhost...
