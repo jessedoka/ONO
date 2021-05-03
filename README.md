@@ -11,14 +11,10 @@ This is just the current goal I have in mind not sure, where this is going will 
 ## RUNNING 
 ```shell
 bash ono.sh 
-
-or 
-
-zsh ono.sh
 ```
 Should start running on your localhost...
 
-# DATABASE (MONGODB)
+## DATABASE (MONGODB)
 
 Set up a mongo collection and make a database with two collection called `users` and `messages` 
 Then create a file called `config.py` and connect it to your database like so: 
