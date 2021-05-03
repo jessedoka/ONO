@@ -1,17 +1,11 @@
 import ssl
-from pymongo import MongoClient
+from config import client
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
 
 from user import User
 
-client = MongoClient( 
-    'mongodb+srv://Jesse:SbjZHADI2ze5Ed6y@ono.s8dnu.mongodb.net/ChatDB?retryWrites=true&w=majority',
-    ssl = True,
-    ssl_cert_reqs=ssl.CERT_NONE
-    )
-
-chat_db = client.get_database('ChatDB')
+chat_db = client.get_database('CHAT_DB')
 users_collection = chat_db.get_collection("users")
 message_collection = chat_db.get_collection("messages")
 
@@ -49,8 +43,4 @@ def timeformat(time):
 
     
 if __name__ == "__main__": 
-    x = message_collection.find()
-    messages = [msg for msg in x]
-    for msg in messages:
-        print(timeformat(msg['time'].strftime('%X')))
-        del msg['_id']
+    save_user('test', 'jgodwin42@icloud.com', 'test')
