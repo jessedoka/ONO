@@ -1,3 +1,4 @@
+from logging import debug
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user, LoginManager
 from flask_socketio import SocketIO, join_room, leave_room
@@ -112,11 +113,12 @@ def handle_send_message_event(data):
     save_message(data['username'], data['room'], data['message'])
     socketio.emit('receive_message', data, room=data['room'])
 
-
 @login_manager.user_loader
 def load_user(username):
     return get_user(username)
 
 
 if __name__ == "__main__":
-    socketio.run(app, host='127.0.0.1')
+    print('running...')
+    socketio.run(app, debug=True, host="192.168.0.67")
+    
