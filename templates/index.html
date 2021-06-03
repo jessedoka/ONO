@@ -6,34 +6,160 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
         <title>ONO</title>
         <style>
-            a {
+            @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                outline: none;
+                list-style: none;
+                text-decoration: none;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            body{
+                background: #2E2E2E;
+                font-size: 14px;
+            }
+
+            .wrapper .header{
+                max-width: 350px;
+                width: 100%;
+                height: auto;
+                margin: 50px auto;
+            }
+
+            .wrapper .header .top,
+            .wrapper .signup{
+                background: #3A3A3A;
+                border: 1px solid #707070;
+                border-radius: 1px;
+                padding: 40px 40px 20px;
+            }
+
+            .wrapper .header .logo img{
+                display: block;
+                margin: 0 auto 35px;
+            }
+
+            #ono_logo{
+                width: 262px;
+                height: 262px;
+            }
+
+            button {
+                background: none!important;
+                border: none;
+                padding: 0!important;
+                /*optional*/
+                font-family: arial, sans-serif;
+                /*input has OS specific font-family*/
+                color: #fff;
+                cursor: pointer;
+            }
+
+            a{
                 color: #ffffff;
                 text-decoration: none;
-                margin: auto auto auto 32px;
-                transition: color 0.3s;
             }
 
-            a:hover {
-            color: #1592E6;
-            text-decoration: overline;
+            .wrapper .header .form .input_field{
+                margin-bottom: 5px;
             }
 
-            img{
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+            .wrapper .header .form .input_field .input{
+                width: 100%;
+                background: #fafafa;
+                border: 1px solid #efefef;
+                font-size: 12px;
+                border-radius: 3px;
+                color: #262626;
+                padding: 10px;
             }
 
-            div.a{
+            .wrapper .header .form .input_field .input:focus{
+                border: 1px solid #b2b2b2;
+            }
+
+            .wrapper .header .form .btn{
+                margin: 10px 0;
+                background-color: #3897f0;
+                border: 1px solid #3897f0;
+                border-radius: 4px;
                 text-align: center;
-                font-size: 54px;
+                padding: 5px;
             }
-        </style> 
+
+            .wrapper .header .form .btn a{
+                color: #fff;
+                display: block;
+            }
+
+            .wrapper .dif{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .wrapper .dif .forgot{
+                font-size: 12px;
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .wrapper .signup{
+                margin: 10px 0 20px;
+                padding: 25px 40px;
+                text-align: center;
+                color: #262626;
+            }
+
+            .wrapper .signup a{
+                color: #3897f0;
+            }
+
+            .footer{
+                max-width: 935px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 40px 0;
+                display: flex;
+                justify-content: space-between;
+            }
+
+        </style>
     </head>
     <body>
-        <img id="ono_logo" src="{{ url_for('static', filename='img/ono_logo.png')}}" alt="ONO LOGO" width="25%" height="25%">
-        <div class="a">
-            <a id="welcome-button" href="{{ url_for('login') }}">WELCOME</a>
+        <div class="wrapper">
+            <div class="header">
+                <div class="top">
+                    <div class="logo">
+                        <img id="ono_logo" src="{{ url_for('static', filename='img/ono_logo.png')}}" alt="logo">
+                    </div>
+                    <div class="form">
+                        <form method="post" action="\menu">
+                            <div class="input_field">
+                                <input class="input" type="text" name="username" placeholder="username">
+                            </div>
+                            <div class="input_field">
+                                <input class="input" type="password" name="password" placeholder="password">
+                            </div>  
+                            <div class='btn'>
+                                <button type="submit">Submit</button>
+                            </div>  
+                        </form>
+                    </div>
+                    <div class="dif">
+                        <div class="forgot">
+                            <a href="/">Forgot password?</a>
+                        </div>
+                    </div> 
+                </div>
+                <div class="signup">
+                    <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                </div>
+            </div>
         </div>
     </body>
 </html>

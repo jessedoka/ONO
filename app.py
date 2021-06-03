@@ -16,15 +16,10 @@ login_manager.init_app(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
 
     if current_user.is_authenticated:
         return redirect(url_for('menu'))
-
+    
     message = ''
     if request.method == 'POST':
         username = request.form.get('username')
@@ -34,10 +29,11 @@ def login():
         if user and user.check_password(password_input):
             login_user(user)
             return redirect(url_for('menu'))
-        else:
-            message = 'failed to login'
-    return render_template('login.html', message=message)
+        else: 
+            message = 'Incorrect Username or Password'
+        
 
+    return render_template('index.html', message=message)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -70,7 +66,7 @@ def logout():
 
 @app.route('/menu')
 def menu():
-    username = request.form.get('username')
+    username = request.form.get('username') #NOTE: current_error: command not allowed -> might relate to form atrribute in index.html 
     return render_template('menu.html', username=username)
 
 @app.route('/chat')
