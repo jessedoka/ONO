@@ -4,72 +4,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-        <title>ONO (SignUp)</title>
-        <style>
-            body {
-                color: #ffffff;
-                margin-left: 30px;
-            }
-        
-            #motto {
-                font-size: 54px;
-            }
-        
-            #container img {
-                width: 120px;
-                height: 120px;
-            }
-            
-            #username, #password, #email{
-                margin-bottom: 25px;
-            }
-
-            input[type=text],
-            input[type=password],
-            input[type=email] {
-                font-family: 'Bahnschrift';
-                padding-left: 30px;
-                color: #585858;
-                width: 500px;
-                height: 70px;
-                font-size: 54px;
-                background-color: #707070;
-            }
-
-            .pulseBtn {
-                padding: 12px 24px;
-                background-color: hsl(0, 0%, 40%);
-                color: hsl(0, 0%, 17%);
-                border-radius: 6px;
-                box-shadow: 0 0 0 0 rgba(230, 237, 255, 0.7);
-                animation: pulse 1.75s infinite cubic-bezier(0.66, 0, 0, 1);
-            }
-
-            @keyframes pulse {
-                to {
-                box-shadow: 0 0 0 5px rgba(230, 237, 255, 0);
-                }
-            }
-        </style>
+        <title>ONO (SignUp)</title>       
     </head>
     <body>
-        <div id='container'>
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='img/ono.png') }}" alt="Logo"> 
-            </a>
-            <h2 id="motto">ENTER IF YOU DARE</h2>
+        <div class="wrapper">
+            <div class="header">
+                <div class="top">
+                    <div class="logo">
+                        <img id="ono_logo" src="{{ url_for('static', filename='img/ono_logo.png')}}" alt="logo">
+                    </div>
+                    <div class="form">
+                        <form method="post" action="/signup">
+                            <div class="input_field">
+                                <input class="input" type="text" name="username" placeholder="Username">
+                            </div>
+                            <div class="input_field">
+                                <input class="input" type="email" name="email" placeholder="Email">
+                            </div>
+                            <div class="input_field">
+                                <input class="input" type="password" name="password" placeholder="Password">
+                            </div>
+                            <div class="btn">
+                                <button type="submit">Sign Up!</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <h1>SignUp</h1>
-        <h3>{{ message }}</h3>
-        <form method="post" action="/signup">
-            <input id='username' type="text" name="username" placeholder="Username">
-            <br>
-            <input id='email' type="email" name="email" placeholder="Email">
-            <br>
-            <input id='password' type="password" name="password" placeholder="Password">
-            <br>
-            <button id='submit' class='pulseBtn' type="submit">Submit</button>
-        </form>     
     </body>
 </html>
