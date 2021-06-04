@@ -1,4 +1,3 @@
-from logging import debug
 from flask import Flask, render_template, request, redirect, url_for
 from flask_login import current_user, login_user, login_required, logout_user, LoginManager
 from flask_socketio import SocketIO, join_room, leave_room
@@ -14,12 +13,13 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
 def home():
 
     if current_user.is_authenticated:
         return redirect(url_for('menu'))
-    
+
     message = ''
     if request.method == 'POST':
         username = request.form.get('username')
@@ -29,11 +29,10 @@ def home():
         if user and user.check_password(password_input):
             login_user(user)
             return redirect(url_for('menu'))
-        else: 
-            message = 'Incorrect Username or Password'
-        
-
+        else:
+            message = 'failed to login'
     return render_template('index.html', message=message)
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -66,7 +65,7 @@ def logout():
 
 @app.route('/menu')
 def menu():
-    username = request.form.get('username') #NOTE: current_error: command not allowed -> might relate to form atrribute in index.html 
+    username = request.form.get('username')
     return render_template('menu.html', username=username)
 
 @app.route('/chat')
@@ -109,12 +108,11 @@ def handle_send_message_event(data):
     save_message(data['username'], data['room'], data['message'])
     socketio.emit('receive_message', data, room=data['room'])
 
+
 @login_manager.user_loader
 def load_user(username):
     return get_user(username)
 
 
 if __name__ == "__main__":
-    print('running...')
-    socketio.run(app, debug=True, host="192.168.0.67")
-    
+    socketio.run(app, host='127.0.0.1')
