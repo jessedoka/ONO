@@ -43,4 +43,4 @@ def timeformat(time):
 
     
 if __name__ == "__main__": 
-    save_user('test', 'jgodwin42@icloud.com', 'test')
+    save_user('test', 'test@icloud.com', 'test')
