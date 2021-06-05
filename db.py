@@ -10,7 +10,7 @@ users_collection = chat_db.get_collection("users")
 message_collection = chat_db.get_collection("messages")
 
 
-def save_user(username:  str, email: str, password: str): 
+def save_user(username: str, email: str, password: str): 
     password_hash = generate_password_hash(password)
     users_collection.insert_one({
         '_id': username,
@@ -43,4 +43,4 @@ def timeformat(time):
 
     
 if __name__ == "__main__": 
-    save_user('test', 'jgodwin42@icloud.com', 'test')
+    save_user('test', 'test@icloud.com', 'test')
