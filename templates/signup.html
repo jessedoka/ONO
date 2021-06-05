@@ -13,7 +13,6 @@
                     <div class="logo">
                         <img id="ono_logo" src="{{ url_for('static', filename='img/ono_logo.png')}}" alt="logo">
                     </div>
-                    <h3> {{ message }}</h3>
                     <div class="form">
                         <form method="post" action="/signup">
                             <div class="input_field">
@@ -25,11 +24,15 @@
                             <div class="input_field">
                                 <input class="input" type="password" name="password" placeholder="Password">
                             </div>
+                            <h3> {{ message }}</h3>
                             <div class="btn">
                                 <button type="submit">Sign Up!</button>
                             </div>
                         </form>
                     </div>
+                </div>
+                <div class="signup">
+                    <p>Don't want an account? <a href="/">Back</a></p>
                 </div>
             </div>
         </div>

@@ -51,9 +51,16 @@
                 cursor: pointer;
             }
 
-            a{
+            a, p{
                 color: #ffffff;
                 text-decoration: none;
+            }
+
+            h3{
+                font-size: 15px;
+                color: brown;
+                text-align: center;
+                margin-top: 20px;
             }
 
             .wrapper .header .form .input_field{
@@ -100,11 +107,17 @@
                 margin-top: 20px;
             }
 
+            .greeting{
+                font-size: 12px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
             .wrapper .signup{
                 margin: 10px 0 20px;
                 padding: 25px 40px;
                 text-align: center;
-                color: #262626;
+                color: #e6e6e6;
             }
 
             .wrapper .signup a{

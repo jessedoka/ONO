@@ -13,20 +13,20 @@
                     <div class="logo">
                         <img id="ono_logo" src="{{ url_for('static', filename='img/ono_logo.png')}}" alt="logo">
                     </div>
-                    <h3> {{ message }} </h3>
                     <div class="form">
                         <form method="post" action="{{ url_for('home') }}">
                             <div class="input_field">
-                                <input class="input" type="text" name="username" placeholder="username">
+                                <input class="input" type="text" name="username" placeholder="Username">
                             </div>
                             <div class="input_field">
-                                <input class="input" type="password" name="password" placeholder="password">
+                                <input class="input" type="password" name="password" placeholder="Password">
                             </div>  
                             <div class='btn'>
                                 <button type="submit">Submit</button>
                             </div>  
                         </form>
                     </div>
+                    <h3> {{ message }} </h3>
                     <div class="dif">
                         <div class="forgot">
                             <a href="/">Forgot password?</a>
@@ -35,6 +35,7 @@
                 </div>
                 <div class="signup">
                     <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                    <p> Want to go Anon? <a href="/menu"> Anon Mode </a>
                 </div>
             </div>
         </div>
