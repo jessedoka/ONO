@@ -10,7 +10,7 @@ app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 app.secret_key = "O!N@O£"
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'home'
 login_manager.init_app(app)
 
 
@@ -30,7 +30,7 @@ def home():
             login_user(user)
             return redirect(url_for('menu'))
         else:
-            message = 'failed to login'
+            message = 'FAILED TO LOGIN'
     return render_template('index.html', message=message)
 
 
@@ -44,16 +44,22 @@ def signup():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-        user_check: bool = re.search('^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$', username)
-        pass_check: bool = re.search('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$', password)
+
+        user_pat = re.compile('^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$')
+        pass_pat = re.compile('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')
+
+
+        user_check = bool(re.match(user_pat, username))
+        pass_check = bool(re.match(pass_pat, password))
+
         if user_check and pass_check:
             try:
                 save_user(username, email, password)
-                return redirect(url_for('login'))
+                return redirect(url_for('home'))
             except DuplicateKeyError:
                 message = 'User already exists!'
         else: 
-            message = 'username or password needs to be secure!'
+            message = 'Username and Password needs to be secure!'
     return render_template('signup.html', message=message)
 
 
@@ -66,6 +72,10 @@ def logout():
 @app.route('/menu')
 def menu():
     username = request.form.get('username')
+    if username == None:
+        username = 'Anon'
+    
+    app.logger.info(username)
     return render_template('menu.html', username=username)
 
 @app.route('/chat')
@@ -115,4 +125,4 @@ def load_user(username):
 
 
 if __name__ == "__main__":
-    socketio.run(app, host='127.0.0.1')
+    socketio.run(app, host='127.0.0.1', port='5000')
