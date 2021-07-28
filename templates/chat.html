@@ -6,41 +6,44 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         <title>ONO (chat)</title>
         <style>
-            
-            #roomid{
-                font-size: 100px;
-                text-align: center;
+            header {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 10px 10%;
             }
 
-            .message-box{
-                color: #000000;
-                text-align: unset;
+            #icon{
+                cursor: pointer;
+                margin-right: auto;
+                width: 200px;
+            }
+
+            .nav_link li{
+                cursor: pointer;
+                display: inline-block;
+                padding: 0px 20px;
+                font-family: 'Roboto', sans-serif;
+                font-size: 30px;
+                color: azure;
             }
 
             .box{
-                background-color: #D8D8D8;
-                margin: auto;
-                width: 60%;
-                padding: 10px;
-
+                margin: 10px 14%;
             }
-
-            .container{
-                display: flex;
-                width: inherit;
-            }
-
-            input[type=text]{
-                font-family: 'Bahnschrift';
-                color: #4b4b4b;
-                margin: auto;
-                width:fit-content;
-            }
-            
-        </style> 
+        </style>
     </head>
     <body>
-        <h1 id="roomid"> ROOM {{ room }}</h1>
+        <header>
+            <img id='icon' src="{{ url_for('static', filename='img/ono-symbol.png')}}" alt="icon">
+            <nav>
+                <ul class="nav_link">
+                    <li>
+                        ROOM {{ room }}
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <div class='box'>
             <div class='message-box' id="messages">
                 {% for msg in messages %}
