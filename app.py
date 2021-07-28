@@ -74,8 +74,6 @@ def menu():
     username = request.form.get('username')
     if username == None:
         username = 'Anon'
-    
-    app.logger.info(username)
     return render_template('menu.html', username=username)
 
 @app.route('/chat')
@@ -92,7 +90,7 @@ def chat():
     if room:
         return render_template('chat.html', room=room, messages=messages, time=datetime.now().strftime('%X'))
     else:
-        return redirect('/menu')
+        return redirect('/menu') # redirects anon?
 
 
 @socketio.on('join_room')
