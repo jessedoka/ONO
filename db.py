@@ -2,7 +2,6 @@ import ssl
 from config import client
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
-
 from user import User
 
 chat_db = client.get_database('CHAT_DB')
