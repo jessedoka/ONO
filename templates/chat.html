@@ -30,13 +30,74 @@
 
             .box{
                 margin: 10px 14%;
+            } 
+
+            .wrapper .header {
+                max-width: 1440px;
             }
+
+            .container {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 30px 10% !important;
+                background: #3A3A3A;
+                border: 1px solid #707070;
+                border-radius: 1px;
+                padding: 20px 20px 20px !important;
+            }
+
+            #message_input{
+                cursor: pointer;
+                margin-right: 90px;
+                padding: 9px 250px;
+                background-color: rgb(202, 202, 202);
+                border: rgb(87, 87, 87) 1px;
+                border-radius: 50px;
+                transition: all 0.3s ease 0s;
+            }
+
+            .navlinks{
+                list-style: none;
+            }
+
+            .navlinks li{
+                display: inline-block;
+                padding: 0px 20px;
+            }
+
+            .message-box {
+                background: #dddddd;
+                border: 1px solid #707070;
+                border-radius: 1px;
+                padding: 40px 40px 20px;
+                overflow: scroll;
+                height: 400px;
+            }
+
+            button {
+                padding: 9px 25px !important;
+                background-color: rgba(87, 87, 87, 0.103) !important;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s ease 0s;
+            }
+
+            button:hover{
+                background-color: rgb(87, 87, 87) !important;
+            }
+
+
         </style>
+
+        <!-- Line: 42 this is to create a box around the input values in order to talk to people -->
+        <!-- within this I am copying the header class from layout.js/3chukky -->
     </head>
     <body>
         <header>
             <img id='icon' src="{{ url_for('static', filename='img/ono-symbol.png')}}" alt="icon">
-            <nav>
+            <nav> 
                 <ul class="nav_link">
                     <li>
                         ROOM {{ room }}
@@ -44,26 +105,36 @@
                 </ul>
             </nav>
         </header>
-        <div class='box'>
-            <div class='message-box' id="messages">
-                {% for msg in messages %}
-                    {% if msg['room'] == room %}
-                        <div>
-                            <b>{{msg['id']}}</b>
-                            <b>{{ msg['time'].strftime('%X')}}</b>
-                            {{ msg['message'] }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class='container' >
-                <form id="message_input_form">
-                    <input type="text" placeholder="WHAT ARE YOU THINKING" id="message_input">
-                    <button id='btn' type="submit">Send</button>
-                </form>
-                <form id="leave_form">
-                    <button id='btn' type="submit">leave</button>
-                </form>
+        <div class="wrapper">
+            <div class="header">
+                <div class='box'>
+                    <div class='message-box' id="messages">
+                        {% for msg in messages %}
+                            {% if msg['room'] == room %}
+                                <div>
+                                    <b>{{msg['id']}}</b>
+                                    <b>{{ msg['time'].strftime('%X')}}</b>
+                                    {{ msg['message'] }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class='container' >
+                        <form id="message_input_form">
+                            <ul class="navlinks">
+                               <li>
+                                    <input type="text" placeholder='WHAT ARE YOU THINKING' id='message_input'>
+                                </li>
+                                <li>
+                                    <button id='btn' type="submit">Send</button>
+                                </li>
+                            </ul>
+                        </form>
+                        <form id="leave_form">
+                            <button id='btn' type="submit">leave</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
